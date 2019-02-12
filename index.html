@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HREXT07 R00lz!</title>
+  <title>Race To Live!</title>
   <script
           src="https://code.jquery.com/jquery-3.3.1.js"
           integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -25,18 +25,39 @@ container for the response-feedback (start with alert)
 </head>
 <body>
 
-<div class="container-main">
-  <header>My Cruddy App</header>
-  <div class="container-form">
-    <input type="text" class="input-key" placeholder="enter key">
-    <input type="text" class="input-value" placeholder="enter value">
-    <button class="btn-add">Submit</button>
-    <button class="btn-update">Update</button>
-    <button class="btn-delete">Delete</button>
-    <button class="btn-clear">Clear</button>
-  </div>
-  <div class="container-data"></div>
-</div>
+    <div class="jumbo-container">
+      
+      <div >
+        <div class="tom jumbo"></div>
+          <div ><button class="pos-button">Back</button><button class="pos-button">Forward</button> </div>
+      </div>
+
+      <div style="width:100px;"></div>  <!-- space between positional counters. -->
+
+
+      <div>
+        <div class="jerry jumbo"> </div>
+          <div ><button class="pos-button">Back</button><button class="pos-button">Forward</button> </div>
+      </div>
+
+
+    </div>
+
+
+      <div class="grid-top-container">
+        <div class="grid-canvas">
+
+          <div class="grid-container">
+            <div class="grid-block jerry"></div>
+            <div class="grid-block tom"></div>
+            <div class="goal-block goal"></div>
+          </div>
+
+        </div>
+      </div>
+
+
+
 
 </body>
 </html>
