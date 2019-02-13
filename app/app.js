@@ -1,13 +1,19 @@
-/*
-Init app
-interact with DOM
-interact with localstorage
 
- */
 
 $(document).ready(function(){
   // this is where we jquery
   //var keyData = 'ourKey'; // going to need to make this dynamic?
+
+
+
+
+  $(".pos-button").click( function(event){
+    console.log(event);
+
+    console.log($(".jerry")) ;
+
+  });
+
 
 
   $('.btn-add').on('click', function(e){
