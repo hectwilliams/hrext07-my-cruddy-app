@@ -13,7 +13,10 @@ var updatePlayerPosition = function(jqueryNode, obj, isforward) {
 	}
 
 	if(isforward===false){
-		--data[select]
+
+		if( data[select] >0 ) {
+			--data[select]
+		}
 	}
 
 
