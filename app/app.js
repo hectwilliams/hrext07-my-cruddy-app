@@ -1,64 +1,103 @@
 
 
 $(document).ready(function(){
-  // this is where we jquery
-  //var keyData = 'ourKey'; // going to need to make this dynamic?
-
-  var track=  {tom:0 , jerry:0} ; 
-  localStorage.clear();
-  localStorage.setItem("players",  JSON.stringify(  track ) )
 
 
 
-  $(".pos-button").click( function(event){    
-    var $buttonEventNode = $(event.currentTarget.parentElement.children[0] )
-    var buttonForwardPressed=event.currentTarget.innerHTML ==="Forward" ;
-    var buffer;
 
-    buffer= updatePlayerPosition( $buttonEventNode, localStorage.getItem("players") ,buttonForwardPressed);
-    localStorage.setItem("players",buffer);
+  resetBoard();
+
+  $(".helper-block").hide();
 
 
-    console.log(event)
+
+  // click highlighted region to move
+  $(".grid-background").click(function(event){
+    var x= Math.ceil((event.originalEvent.x - localStorage.getItem("startX")) /40) ;
+    var y= Math.ceil((event.originalEvent.y - localStorage.getItem("startY")) /40) ;
+    var data=[y,x];
+    var key= "jerrysFate";
+    var outcome;
+    var getObj;
+
+    if( getLocalValue("greenZone").includes(data.toString()) ) {
+      localStorage.setItem("player", JSON.stringify(data) );    
+      movePlayer( $(".grid-background"),[x,y] );
+
+      setLocalValue("greenZone",[]);
+
+      renderPosLights( xyCoordinateToNumber(data), $(".grid-background"),getLocalValue("greenZone") );
+    
+      getObj= getLocalValue(key)
+      questionOutcome= getObj[JSON.stringify([x,y])] ;
+
+
+      if(questionOutcome ){
+        $(".messenger-box").text( questionOutcome)
+          window.setTimeout( function(){
+          
+          $(".circle-block").filter(function(idx,element){
+           return $(element).css("grid-column-start")==x && $(element).css("grid-row-start")==y ;
+          }).remove()
+          $(".messenger-box").text("") },1000);
+
+    }
+
+
+    if(x==10 && y==10){
+      $(".messenger-box").text("WINNER") ;
+      
+      window.setTimeout( function(){
+        $(".messenger-box").text("") 
+        resetBoard()
+      },1000);
+      }
+    }else{
+
+      $(".messenger-box").text("NOT ALLOWED") ;
+      window.setTimeout( function(){
+        $(".messenger-box").text("") },500);
+    }
+
+    
+
+    if( !JSON.parse(localStorage.getItem("helperOn"))  ) {
+      $(".helper-block").hide();
+    }
+
+  
 
 
   });
 
+  $(".test").click(function(){
+             localStorage.setItem("helperOn",  !JSON.parse( localStorage.getItem("helperOn") )  ) ;
 
+    if( JSON.parse( localStorage.getItem("helperOn") )===true ){
 
-  $('.btn-add').on('click', function(e){
-    // console.log(e);
-    // var keyData = $('.input-key').val();
-    // var valueData = $('.input-value').val();
-    // // write to db
-    // // localStorage.setItem(keyData, valueData);
-    // // read from db
-    // // var displayText = keyData + ' | ' +   .getItem(keyData);
-    // // this only displays the last one? might want to switch to html
-    // // and append a div
-    // // <div class="display-data-item" data-keyValue="keyData">valueData</div>
-    // // if you use backticks ` you can use ${templateLiterals}
-    // // TODO make this vars make sense across the app
-    // $('.container-data').html('<div class="display-data-item" data-keyValue="'+ keyData +'">'+valueData+'</div>');
-    // $('.input-key').val('');
-    // $('.input-value').val('');
+      $(".helper-block").show();
+        $(".test").html("Remove Assitance")
+    }else {
+      $(".helper-block").hide();
+      $(".test").html("?")
+
+    }
+
   });
 
+$(".reset").click(function(){
+  resetBoard();
 
-  // // update db
-  //   // need to expand when  more than 1 item is added
+})
 
-  // // delete item
-  // $('.container-data').on('click', '.display-data-item', function(e){
-  //   console.log(e.currentTarget.dataset.keyvalue);
-  //   var keyData = e.currentTarget.dataset.keyvalue;
-  //   localStorage.removeItem(keyData);
-  //   $('.container-data').text('');
-  // });
-  // // delete all?
-  // $('.btn-clear').click(function(){
-  //   localStorage.clear();
-  //   $('.container-data').text('');
-  // });
+
+
+
+
+
+
+
+
+
 
 });

@@ -8,58 +8,40 @@
           integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
           crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-  <script src="app/app.js"></script>
-  <script src="app/HectronLibrary.js"></script>
+      <script src="app/HectronLibrary.js"></script>
+    <script src="app/app.js"></script>
+
+
   <link rel="stylesheet" href="css/style.css">
 
-
-  <!--
-
-√ create container
-√ create button
-√ input field
-√ container to display text
-√ update button(or maybe click on the container item)
-√ delete button
-container for the response-feedback (start with alert)
--->
 </head>
 <body>
 
     <div class="jumbo-container">
-      
-      <div >
-        <div class="tom jumbo"></div> 
-          <button class="pos-button">Back</button><button class="pos-button">Forward</button> 
-      </div>
-
-      <div style="width:100px;"></div>  <!-- space between positional counters. -->
-
+    
 
       <div>
-        <div class="jerry jumbo"> </div> 
-          <button class="pos-button">Back</button><button class="pos-button">Forward</button> 
+        <div class="jerry jumbo"></div> 
+          <button class="test">?</button>          <button class="reset">reset</button>
+
       </div>
-
-
     </div>
-
-
 
       <div class="grid-top-container">
         <div class="grid-canvas">
 
-          <div class="grid-container">
+          <div class="grid-background">
             <div class="grid-block jerry"></div>
-            <div class="grid-block tom"></div>
             <div class="goal-block goal"></div>
-
+            <div class="helper-block"> </div>
           </div>
 
         </div>
       </div>
 
-
+      <div class="message-container">
+        <div class="messenger-box"></div> 
+      </div>
 
 
 </body>
