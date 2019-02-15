@@ -43,8 +43,16 @@ var updatePlayerPositionBuffer = function(localStorageJSON, isforward) {
   var movePlayer= function(jqueryElement, arrayXYPosition){
   	var x=arrayXYPosition[0];
   	var y= arrayXYPosition[1];
+  	var bool=false;
   	jqueryElement.children(".jerry").css ( "grid-row-start",`${ y===0 && 10 || y}`);
   	jqueryElement.children(".jerry").css ( "grid-column-start",`${ x===0 && 10 || x}`);
+  	
+
+  	if(x!=1 || y!=1){ 
+  		setLocalValue("userStarted",true); 
+  	}
+
+
   };
 
 
@@ -195,16 +203,19 @@ var renderPosLights = function(xyPosition,jqueryElement,arrBuffer) {
 }
 
 
-var questionMarkLightShow= function(className) {
+var questionMarkLightShow= function(className,tag) {
   window.setInterval ( function(){
-    $(".circle-block").css("color", randomRGBHex(),1000);
+    $(className).css(tag||"color", randomRGBHex(),1000);
   });
   
   return;
 }
 
-var rand = function(n, enableInit){
-	var init=enableInit&&3||1 ;
+var rand = function(n, enableInit,yData){
+	var init=1 ;
+	if(enableInit && yData<3){
+		init=3;
+	}
 	return Math.floor(Math.random() * (10 - init + 1)) + init; 	
 	//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#Getting_a_random_integer_between_two_values_inclusiv
 
@@ -217,13 +228,14 @@ var createQuestionElement = function(jqueryParentElement, n) {
 	var $element= $(`<div class="${className}">?</div>`);
 	var storage = 	localStorage.getItem(key);
 	var y=rand(n,false);
-	var x=rand(n,true);
+
+	var x=rand(n,true,y);
 	var data= JSON.parse( localStorage.getItem(key) );
 	$element.css("grid-row-start",`${y}`)
 	$element.css("grid-column-start",`${x}`);
 	jqueryParentElement.append($element);
 
-	data[ JSON.stringify([x,y]) ] =  destinyList[ Math.floor(Math.random() * (25))] || "Nothing"
+	data[ JSON.stringify([x,y]) ] =  destinyList[ Math.floor(Math.random() * (getLocalValue("questionCount")))] || "Nothing Here"
 	localStorage.setItem( key, JSON.stringify(data)); 
 
 };
@@ -232,7 +244,7 @@ var renderQuestionMarks= function (jqueryParentElement,count) {
 	
 	if(count===undefined){
 		localStorage.setItem("jerrysFate",JSON.stringify({testing:123}) );
-		return renderQuestionMarks(jqueryParentElement,25);
+		return renderQuestionMarks(jqueryParentElement,getLocalValue("questionCount"));
 	}
 
 	 if(count.constructor===Number) {
@@ -243,12 +255,13 @@ var renderQuestionMarks= function (jqueryParentElement,count) {
 			return renderQuestionMarks(jqueryParentElement,count);
 		}
 	} 
-	return  questionMarkLightShow("circle-block");
+	return  questionMarkLightShow(".circle-block");
 };
 
 
 var resetBoard = function() {
-  
+	setLocalValue("questionCount",10);
+
    movePlayer( $(".grid-background"),[1,1] );
 	
 	$(".circle-block").remove();
@@ -258,6 +271,11 @@ var resetBoard = function() {
   localStorage.setItem("startX",$(".grid-background")[0].offsetLeft );
   localStorage.setItem("startY",$(".grid-background")[0].offsetTop );
   localStorage.setItem("helperOn", false)
+  localStorage.setItem("userStarted",false)
+  localStorage.setItem("questionCount",10)
+  localStorage.setItem("priorEqNew", true );
+  localStorage.setItem("priorData",JSON.stringify ([1,1]) );
+  localStorage.setItem("xyData",JSON.stringify ([1,1]) );
   setLocalValue("greenZone",[])
   renderQuestionMarks ( $(".grid-background") ) ; 
   renderPosLights( 1, $(".grid-background"),getLocalValue("greenZone") );

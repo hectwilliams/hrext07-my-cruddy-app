@@ -44,13 +44,44 @@
 	font-size: 10px;
 }
 
+.difficulty-containter{
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: column;
+		width: 120px;
 
 
+}
+.difficulty-button{
+	border-style: groove;
 
+}
+
+.easy{
+	background-color: rgb(173,255,47);
+}
+.medium{
+	background-color: rgb(255,215,0);
+}
+.hard{
+	background-color: rgb(139,0,0);
+}
+
+
+.reset{
+	text-align: center;
+	padding-left: 10%
+}
+
+.reset-button{
+	background-color: red;
+	color: black;
+}
 
 .grid-top-container{
 	display: flex;
 	justify-content: center;
+
 }
 
 
@@ -107,7 +138,7 @@
 	animation-duration: 5s;
 	animation-name: slide;
 	animation-fill-mode: none;
-
+	padding-left: 10%;
 	font-size: small;
 	color: red;
 }
